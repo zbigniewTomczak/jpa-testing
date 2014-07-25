@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+version="2.1">
+	<persistence-unit name="jpa" transaction-type="RESOURCE_LOCAL" >
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<!-- shouldn't be valid for java SE per specification, but it works for EclipseLink ... -->
+		<class>tomczak.Employee</class>
+
+		<properties>
+		
+			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby:testDB;create=true" />
+			<property name="javax.persistence.jdbc.user" value="jpa" />
+			<property name="javax.persistence.jdbc.password" value="jpa" />
+			<property name="javax.persistence.schema-generation.database.action" value="create" />
+
+            <!-- both, database, sql-script -->
+			<!--property name="eclipselink.ddl-generation.output-mode" value="database" /-->
+            <!-- OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL -->
+			<property name="eclipselink.logging.level" value="WARNING"/>
+            <property name="eclipselink.logging.timestamp" value="true"/>
+            <!--property name="eclipselink.cache.shared.default" value="false"/-->
+		</properties>
+
+	</persistence-unit>
+</persistence>
