@@ -1,22 +1,20 @@
-package tomczak;
+package tomczak.hibernate;
 
 import org.apache.derby.tools.JDBCDisplayUtil;
+import org.hibernate.internal.SessionImpl;
+import org.hibernate.jdbc.Work;
 import org.junit.*;
+import tomczak.Employee;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.metamodel.EntityType;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
-
+import org.hibernate.Session;
 public class JpaTest {
 
 	
@@ -34,7 +32,7 @@ public class JpaTest {
 	
 	@BeforeClass
 	public static void setUp() {
-        emf = Persistence.createEntityManagerFactory("jpa");
+        emf = Persistence.createEntityManagerFactory("hibernate-jpa");
 	}
 	
 	@AfterClass
@@ -54,14 +52,20 @@ public class JpaTest {
 	@After
 	public void after() throws SQLException {
         em.flush();
-        Connection conn = em.unwrap(Connection.class);
-        Statement st = conn.createStatement();
-        for(EntityType<?> et : emf.getMetamodel().getEntities()) {
-            String query = "SELECT * FROM " + et.getName();
-            System.out.println("> " + query);
-            st.execute(query);
-            JDBCDisplayUtil.DisplayResults(System.out, st, conn);
-        }
+        Session session = em.unwrap(Session.class);
+        session.doWork(new Work() {
+            @Override
+            public void execute(Connection connection) throws SQLException {
+                Statement st = connection.createStatement();
+                for(EntityType<?> et : emf.getMetamodel().getEntities()) {
+                    String query = "SELECT * FROM " + et.getName();
+                    System.out.println("> " + query);
+                    st.execute(query);
+                    JDBCDisplayUtil.DisplayResults(System.out, st, connection);
+                }
+            }
+        });
+
 
 		if (tx != null && tx.isActive()) {
 			tx.commit();

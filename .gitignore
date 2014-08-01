@@ -19,5 +19,5 @@ hs_err_pid*
 target/
 
 #Derby
-testDB/
+test*DB/
 derby.log
