@@ -14,6 +14,7 @@ version="2.1">
 			<property name="javax.persistence.jdbc.url" value="jdbc:derby:testEclipselinkDB;create=true" />
 			<property name="javax.persistence.jdbc.user" value="eclipselinkJPA" />
 			<property name="javax.persistence.jdbc.password" value="eclipselinkJPA" />
+            <!-- drop-and-create, create, drop, none -->
 			<property name="javax.persistence.schema-generation.database.action" value="create" />
 
             <!-- both, database, sql-script -->
@@ -26,7 +27,7 @@ version="2.1">
 
 	</persistence-unit>
     <persistence-unit name="hibernate-jpa" transaction-type="RESOURCE_LOCAL" >
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>tomczak.Employee</class>
 
         <properties>
@@ -35,7 +36,7 @@ version="2.1">
             <property name="javax.persistence.jdbc.url" value="jdbc:derby:testHibernateDB;create=true" />
             <property name="javax.persistence.jdbc.user" value="hibernateJPA" />
             <property name="javax.persistence.jdbc.password" value="hibernateJPA" />
-            <property name="javax.persistence.schema-generation.database.action" value="create" />
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
 
         </properties>
 
