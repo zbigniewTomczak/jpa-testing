@@ -1,2 +1,2 @@
-Test a Standalone JPA entities with EclipseLink and Derby
+Test a Standalone JPA entities with Hibernate/EclipseLink and Derby
 ===========
