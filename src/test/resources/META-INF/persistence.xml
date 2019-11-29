@@ -7,6 +7,7 @@ version="2.1">
 	<persistence-unit name="eclipselink-jpa" transaction-type="RESOURCE_LOCAL" >
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>tomczak.Employee</class>
+		<class>tomczak.Company</class>
 
 		<properties>
 		
@@ -29,6 +30,7 @@ version="2.1">
     <persistence-unit name="hibernate-jpa" transaction-type="RESOURCE_LOCAL" >
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>tomczak.Employee</class>
+		<class>tomczak.Company</class>
 
         <properties>
 

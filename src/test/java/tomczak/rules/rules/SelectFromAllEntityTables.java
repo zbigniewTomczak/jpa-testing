@@ -28,6 +28,10 @@ public class SelectFromAllEntityTables extends ExternalResource {
                 st.execute(query);
                 JDBCDisplayUtil.DisplayResults(System.out, st, connection);
             }
+            String query = "SELECT * FROM Employee_Company";
+            System.out.println("> " + query);
+            st.execute(query);
+            JDBCDisplayUtil.DisplayResults(System.out, st, connection);
         }
     };
 
@@ -38,6 +42,24 @@ public class SelectFromAllEntityTables extends ExternalResource {
             selectWork.execute(conn);
         } catch(SQLException e) {
            // do nothing
+        } catch (PersistenceException e) {
+            // do nothing
+        }
+        try {
+            Session session = em.unwrap(Session.class);
+            session.doWork(selectWork);
+        } catch(PersistenceException e) {
+            // do nothing
+        }
+    }
+
+    @Override
+    protected void before() {
+        try {
+            Connection conn = em.unwrap(Connection.class);
+            selectWork.execute(conn);
+        } catch(SQLException e) {
+            // do nothing
         } catch (PersistenceException e) {
             // do nothing
         }
